@@ -20,6 +20,7 @@ describe('cheese routes', () => {
       smells: false,
     };
     expect(res.status).toBe(200);
+    expect(res.body.length).toEqual(15);
     expect(res.body[0]).toEqual(cheese);
   });
 });
