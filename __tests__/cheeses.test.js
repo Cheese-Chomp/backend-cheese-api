@@ -25,7 +25,7 @@ describe('cheese routes', () => {
   });
 
   it('/api/v1/cheeses/:id', async () => {
-    const res = await request(app).get('/api/v1/cheese/1');
+    const res = await request(app).get('/api/v1/cheeses/1');
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       id: expect.any(String),
