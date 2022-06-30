@@ -8,9 +8,6 @@ describe('cheese routes', () => {
     return setup(pool);
   });
 
-  afterAll(() => {
-    pool.end();
-  });
 
   it('/api/v1/cheeses should return a list of cheeses', async () => {
     const res = await request(app).get('/api/v1/cheeses');
@@ -54,4 +51,9 @@ describe('cheese routes', () => {
     expect(res2.body.name).toEqual('String cheese');
 
   });
+
+  afterAll(() => {
+    pool.end();
+  });
+
 });
