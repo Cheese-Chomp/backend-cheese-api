@@ -7,6 +7,9 @@ describe('cheese routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
+  afterAll(() => {
+    pool.end();
+  });
 
   it('/api/v1/cheeses should return a list of cheeses', async () => {
     const res = await request(app).get('/api/v1/cheeses');
@@ -59,7 +62,13 @@ describe('cheese routes', () => {
     expect(res2.body).toEqual(null);
   });
 
-  afterAll(() => {
-    pool.end();
+  it('PUT /api/v1/cheeses/:id should update a cheese', async () => {
+    const res = await request(app).put('/api/v1/cheeses/2').send({
+      pairs: 'pairs with onion broth'
+    });
+    expect(res.status).toEqual(200);
+    const res2 = await request(app).get('/api/v1/cheeses/2');
+    expect(res2.status).toEqual(200);
+    expect(res2.body.pairs).toEqual('pairs with onion broth');
   });
 });
