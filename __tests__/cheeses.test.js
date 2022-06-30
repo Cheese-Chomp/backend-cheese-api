@@ -8,7 +8,6 @@ describe('cheese routes', () => {
     return setup(pool);
   });
 
-
   it('/api/v1/cheeses should return a list of cheeses', async () => {
     const res = await request(app).get('/api/v1/cheeses');
     const cheese = {
@@ -27,10 +26,11 @@ describe('cheese routes', () => {
     expect(res.body).toEqual({
       id: expect.any(String),
       name: 'American',
-      description: 'American is a creamy, smooth cheese made from blending natural cheeses. It comes in several forms including individually wrapped cheese slices, small pre-sliced blocks and large blocks. It melts well.',
+      description:
+        'American is a creamy, smooth cheese made from blending natural cheeses. It comes in several forms including individually wrapped cheese slices, small pre-sliced blocks and large blocks. It melts well.',
       url: 'https://www.organicauthority.com/.image/t_share/MTU5MzI5OTc3NjUzMzM5MzUw/shutterstock_288297071.jpg',
       pairs: 'pairs with chicken broth',
-      smells: false
+      smells: false,
     });
   });
 
@@ -40,7 +40,7 @@ describe('cheese routes', () => {
       description: 'Fun, delicious snack',
       url: 'http://static1.squarespace.com/static/5424b7b6e4b0bec306d9c41f/5424d2dbe4b0fab9148fa16f/5646caaae4b0e0e27be5cc8b/1585002570101/cesars+string.jpg?format=1500w',
       pairs: 'pairs with grape broth',
-      smells: false
+      smells: false,
     });
 
     expect(res.status).toEqual(200);
@@ -49,11 +49,17 @@ describe('cheese routes', () => {
     expect(res2.status).toEqual(200);
     expect(res2.body.id).toEqual(expect.any(String));
     expect(res2.body.name).toEqual('String cheese');
+  });
 
+  it('DELETE /api/v1/cheeses/:id should delete a cheese', async () => {
+    const res = await request(app).delete('/api/v1/cheeses/1');
+    expect(res.status).toEqual(200);
+    const res2 = await request(app).get('/api/v1/cheeses/1');
+    expect(res2.status).toEqual(200);
+    expect(res2.body).toEqual(null);
   });
 
   afterAll(() => {
     pool.end();
   });
-
 });
